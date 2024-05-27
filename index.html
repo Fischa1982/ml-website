@@ -1,0 +1,59 @@
+<html lang='en'>
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+  <!-- Custom styling -->
+  <link rel='stylesheet' href='css/styles.css'>
+  <!-- Custom font -->
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Just+Another+Hand&display=swap'>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- Tensorflow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+  <!-- TODO: Add Javascript files here -->
+  <script src="js/ai.js"></script>
+  <script src="js/drawing.js"></script>
+  <script src="js/opencv.js" type="text/javascript"></script>
+  <script src="js/logic.js"></script>
+
+</head>
+
+<body>
+
+  <div class='container'>
+
+    <h1 id='title'>Math Garden</h1>
+
+    <h2 id='question'><span id='n1'>3</span> + <span id='n2'>2</span> = </h2>
+
+    <canvas id="myCanvas" height="150" width="150"></canvas>
+
+  </div>
+
+  <div class='container'>
+    <button id='checkAnswer' class='btn' value='Check'>Check Answer</button>
+  </div>
+
+  <!-- TODO: Set up TF model and drawing logic-->
+  <script>
+    canvasStyling();
+    loadModel();
+    var result = nextQuestion();
+
+    document.getElementById("checkAnswer").addEventListener("click", function(event) {
+      const predictionsArray = predictImage().dataSync();
+      const prediction = predictionsArray.indexOf(Math.max(...predictionsArray))
+      console.log(prediction);
+      console.log(result)
+      evaluateAnswer(result, prediction);
+      clearCanvas();
+      result = nextQuestion();
+    })
+  </script>
+
+</body>
+
+</html>
